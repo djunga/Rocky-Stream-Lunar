@@ -28,13 +28,23 @@ app.post("/verifyLogin", (req, res) => {
               if (err) {
                 console.log(err);
               } else {
-                res.send(
+                console.log("login query: ", result);
+                if(result.length > 0 ) {
+                  res.send(
                     {
                       email: email,
                       id: password,
                       isLoggedIn: true,
                     }
                   );
+                }
+                else {
+                  console.log("Wrong credentials, or this admin does not exist.");
+                  res.send({
+                    isLoggedIn: false,
+                  });
+                }
+
               }
             }
         );

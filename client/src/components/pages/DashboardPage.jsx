@@ -1,8 +1,7 @@
-import React, {useContext } from 'react';
+import React, { useEffect, useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { useHistory } from 'react-router-dom';
 import { Box, Button, Grid } from '@material-ui/core';
-import UserContext from '../../contexts/UserContext';
 
 const useStyles = makeStyles((theme) => ({
     button: {
@@ -21,7 +20,15 @@ export default function DashboardPage(props) {
     const history = useHistory();
     const classes = useStyles();
 
-    const { user, setUser } = useContext(UserContext);
+    const [user, setUser] = useState(null);
+
+    useEffect(() => {
+        setUser(props.location.state.user);
+      }, []);
+
+    useEffect(() => { 
+        console.log("user: ", user); 
+    }, [user]);
 
     return(
         <Box

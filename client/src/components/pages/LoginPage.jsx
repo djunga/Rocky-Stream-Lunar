@@ -40,12 +40,15 @@ function LoginPage(props) {
     const classes = useStyles();
     const history = useHistory();
 
-    //const { user, setUser } = useContext(UserContext);
-    const [user, setUser] = useState(null);
+    const [user, setUser] = useState({
+        email: "",
+        id: 0,
+        isLoggedIn: false,
+    });
 
-    const [adminLogin, setAdminLogin] = useState(false);
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
+    const [adminLogin, setAdminLogin] = useState(true);
+    const [email, setEmail] = useState('brian.maynard@it.rockystream.edu');
+    const [password, setPassword] = useState('100');
 
     const handlePassword = (e) => setPassword(e.target.value);
     const handleEmail = (e) => setEmail(e.target.value);
@@ -57,7 +60,6 @@ function LoginPage(props) {
     const switchToStudent = () => {
         setAdminLogin(false);
     }
-
     const submit = () => {
         if(adminLogin) {
             Axios.post("http://localhost:3001/verifyLogin", {
@@ -66,11 +68,12 @@ function LoginPage(props) {
                 isAdmin: true,
             }).then((info) => {
                 const data = info.data;
-                console.log("Logging in...: isLoggedIn: ", data.isLoggedIn);
                 if(data.isLoggedIn) {
-                    setUser({ data, ...user });
-                    console.log("logging in, user: ", user);
-                    history.push('/dashboard');
+                    //setUser(data);
+                    history.push({
+                        pathname: `/dashboard`,
+                        state: { user: data }
+                    });
                 }
                 else {
                     console.log("Login incorrect.");

@@ -8,9 +8,6 @@ import DashboardPage from './components/pages/DashboardPage';
 function App() {
   const [user, setUser] = useState(null);
 
-  useEffect(() => {
-    console.log("user: ", user);
-  }, [user]);
 
   return (
     <div className="App">
