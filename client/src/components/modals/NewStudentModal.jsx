@@ -28,7 +28,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-function NewStudentModal(props) {
+export default function NewStudentModal(props) {
     const classes = useStyles();
 
     const { open, setOpen } = props;
@@ -109,5 +109,3 @@ function NewStudentModal(props) {
         </Modal>
     )
 }
-
-export default NewStudentModal;

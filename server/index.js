@@ -83,6 +83,30 @@ app.post("/verifyLogin", (req, res) => {
     );
   });
 
+  app.post("/viewstudent", (req, res) => {
+    const id = req.body.id;
+  
+    db.query(
+      "SELECT * FROM students WHERE id = ?",
+      [id],
+      (err, result) => {
+        if(err && err.errno == 1062) {  // A student with this id or email already exists in the db.
+          console.log("Error1062: The student with this ID does not exist in the database.");
+          res.send("DNE");
+        }
+        else if (err) {
+          console.log(err);
+        } else {
+          console.log("view student query: ", result);
+          res.send({
+            id: id,
+            result: result,
+          });
+        }
+      }
+    );
+  });
+
 app.listen(3001, ()=> {
-    console.log("The Lunar server is running...");
+    console.log("The LUNAR server is running...");
 });

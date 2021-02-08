@@ -4,10 +4,10 @@ import { BrowserRouter, Switch, Redirect, Route } from 'react-router-dom';
 import UserContext from './contexts/UserContext';
 import LoginPage from './components/pages/LoginPage';
 import DashboardPage from './components/pages/DashboardPage';
+import ViewStudentPage from './components/pages/ViewStudentPage';
 
 function App() {
   const [user, setUser] = useState(null);
-
 
   return (
     <div className="App">
@@ -16,6 +16,7 @@ function App() {
             <Switch>
               <Route exact path="/" component={user?.isLoggedIn ? DashboardPage : LoginPage} />
               <Route exact path="/dashboard" component={DashboardPage} />
+              <Route exact path="/viewstudent/:id" component={ViewStudentPage} />
               <Route path="/*">
                 <Redirect to="/" />
               </Route>
