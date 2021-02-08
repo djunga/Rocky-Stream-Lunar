@@ -55,6 +55,7 @@ app.post("/verifyLogin", (req, res) => {
   });
 
   app.post("/newstudent", (req, res) => {
+    const id = req.body.id;
     const firstName = req.body.firstName;
     const lastName = req.body.lastName;
     const dob = req.body.dob;
@@ -63,13 +64,20 @@ app.post("/verifyLogin", (req, res) => {
     const email = req.body.email;
   
     db.query(
-      "INSERT INTO students (firstName, lastName, dob, major, gpa, email) VALUES (?,?,?,?,?,?)",
-      [firstName, lastName, dob, major, gpa, email],
+      "INSERT INTO students (id, firstName, lastName, dob, major, gpa, email) VALUES (?,?,?,?,?,?,?)",
+      [id, firstName, lastName, dob, major, gpa, email],
       (err, result) => {
-        if (err) {
+        if(err.errno == 1062) {  // A student with this id or email already exists in the db.
+          console.log("Error1062: A student with this id or email already exists in the db.");
+          res.send("DUPLICATE_STUDENT");
+        }
+        else if (err) {
           console.log(err);
         } else {
-          res.send("Values Inserted");
+          res.send({
+            id: id,
+            result: result,
+          });
         }
       }
     );

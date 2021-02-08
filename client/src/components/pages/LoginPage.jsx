@@ -4,7 +4,6 @@ import { Box, Button, Grid, Modal, Paper, TextField } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import Axios from 'axios';
 import lunarLogo from '../../images/lunar_logo.png';
-//import UserContext from '../../contexts/UserContext';
 
 const useStyles = makeStyles((theme) => ({
     parentPaper: {

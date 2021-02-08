@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { useHistory } from 'react-router-dom';
 import { Box, Button, Grid } from '@material-ui/core';
+import NewStudentModal from '../modals/NewStudentModal';
 
 const useStyles = makeStyles((theme) => ({
     button: {
@@ -21,6 +22,7 @@ export default function DashboardPage(props) {
     const classes = useStyles();
 
     const [user, setUser] = useState(null);
+    const [openNewStudent, setOpenNewStudent] = useState(false);
 
     useEffect(() => {
         setUser(props.location.state.user);
@@ -37,7 +39,7 @@ export default function DashboardPage(props) {
             }}
         >
             <Grid container direction="column" spacing={3}>
-                <Button className={classes.button}>
+                <Button className={classes.button} onClick={() => setOpenNewStudent(true)}>
                     New Student
                 </Button>
                 <Button className={classes.button}>
@@ -53,6 +55,9 @@ export default function DashboardPage(props) {
                     Log out
                 </Button>
             </Grid>
+            <NewStudentModal open={openNewStudent} setOpen={setOpenNewStudent} aria-labelledby="form-dialog-title">
+
+            </NewStudentModal>
         </Box>
     );
 }
