@@ -5,6 +5,7 @@ import { Box, Button, Grid } from '@material-ui/core';
 import NewStudentModal from '../modals/NewStudentModal';
 import ViewStudentModal from '../modals/ViewStudentModal';
 import UpdateStudentModal from '../modals/UpdateStudentModal';
+import DeleteStudentModal from '../modals/DeleteStudentModal';
 
 const useStyles = makeStyles((theme) => ({
     button: {
@@ -27,6 +28,7 @@ export default function DashboardPage(props) {
     const [openNewStudent, setOpenNewStudent] = useState(false);
     const [openViewStudent, setOpenViewStudent] = useState(false);
     const [openUpdateStudent, setOpenUpdateStudent] = useState(false);
+    const [openDeleteStudent, setOpenDeleteStudent] = useState(false);
 
     useEffect(() => {
         if(props.location.state) {
@@ -51,20 +53,17 @@ export default function DashboardPage(props) {
                 <Button className={classes.button} onClick={() => setOpenUpdateStudent(true)}>
                     Update Student
                 </Button>
-                <Button className={classes.button}>
+                <Button className={classes.button} onClick={() => setOpenDeleteStudent(true)}>
                     Delete Student
                 </Button>
                 <Button className={classes.button} onClick={() => setOpenViewStudent(true)}>
                     View Student
                 </Button>
-                <Button className={classes.button}>
-                    Log out
-                </Button>
             </Grid>
             <NewStudentModal open={openNewStudent} setOpen={setOpenNewStudent} />
             <ViewStudentModal open={openViewStudent} setOpen={setOpenViewStudent} />
             <UpdateStudentModal open={openUpdateStudent} setOpen={setOpenUpdateStudent} />
-
+            <DeleteStudentModal open={openDeleteStudent} setOpen={setOpenDeleteStudent} />
         </Box>
     );
 }

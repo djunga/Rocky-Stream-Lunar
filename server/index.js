@@ -107,6 +107,47 @@ app.post("/verifyLogin", (req, res) => {
     );
   });
 
+  app.post("/deletestudent", (req, res) => {
+    const id = req.body.id;
+  
+    // Delete their grades first, because of the foreign key constraint.
+    db.query(
+      "DELETE FROM grades WHERE student_id = ?",
+      [id],
+      (err, result) => {
+        if(err && err.errno == 1062) {  // A student with this id or email already exists in the db.
+          console.log("Error1062: The grades for this student do not exist in the database.");
+          res.send("DNE");
+        }
+        else if (err) {
+          console.log(err);
+        } else {
+          console.log("Successfully deleted their grades.");
+          res.send({
+            id: id,
+            result: result,
+          });
+        }
+      }
+    );
+
+    db.query(
+      "DELETE FROM students WHERE id = ?",
+      [id],
+      (err, result) => {
+        if(err && err.errno == 1062) {  // A student with this id or email already exists in the db.
+          console.log("Error1062: The student with this ID does not exist in the database.");
+          res.send("DNE");
+        }
+        else if (err) {
+          console.log(err);
+        } else {
+          console.log("Successfully deleted student");
+        }
+      }
+    );
+  });
+
   app.post("/findstudent", (req, res) => {
     const id = req.body.id;
   
