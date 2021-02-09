@@ -1,34 +1,39 @@
 import React, { useEffect, useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import { useHistory } from 'react-router-dom';
-import { Box, Button, Divider, Grid, Paper } from '@material-ui/core';
-
-const useStyles = makeStyles((theme) => ({
-    button: {
-        background: '#ffad54',
-        border: 0,
-        borderRadius: 3,
-        boxShadow: '0 3px 5px 2px rgba(0, 0, 0, .5)',
-        color: 'white',
-        fontSize: '12px',
-        height: 30,
-        width: '85%',
-    },
-}));
+import { Box, Divider, Grid, Paper } from '@material-ui/core';
+import GradeCard from '../GradeCard';
+import Axios from 'axios';
 
 export default function ViewStudentPage(props) {
-    const history = useHistory();
-    const classes = useStyles();
-
     const [student, setStudent] = useState(null);
+    const [grades, setGrades] = useState(null);
 
     useEffect(() => {
-        setStudent(props.location.state[0]);
+        //console.log(props);
+        if(props.location.state) {
+            setStudent(props.location.state[0]);
+        }
       }, []);
 
-    useEffect(() => { 
-        console.log("student: ", student); 
-    }, [student]);
+    useEffect(() => {
+        const url = props.location.pathname;
+        var len = props.location.pathname.length;
+        len = len - 9;
+        const id = url.substring(len, );
+        Axios.post(`http://localhost:3001/viewstudent/${id}`, {
+            student_id: id,
+            
+        }).then((result) => {
+            if(result.data == "DNE") {
+                console.log("There is no student with this ID.");
+            }
+            else {
+                console.log(result);
+                console.log(result.data.result);
+                setGrades(result.data.result);
+            }
+        });
+      }, []);
 
     return(
         <Box
@@ -47,22 +52,22 @@ export default function ViewStudentPage(props) {
             >
                 <Grid container direction="column" align="left" spacing={1} style={{padding: '5%',}}>
                     <Grid item>
-                        ID: {student.id}
+                        ID: {student?.id}
                     </Grid>
                     <Grid item>
-                        NAME: {student.firstName +" "+ student.lastName}
+                        NAME: {student?.firstName +" "+ student?.lastName}
                     </Grid>
                     <Grid item>
-                        MAJOR: {student.major}
+                        MAJOR: {student?.major}
                     </Grid>
                     <Grid item>
-                        GPA: {student.gpa}
+                        GPA: {student?.gpa}
                     </Grid>
                     <Grid item>
-                        DOB: {student.dob}
+                        DOB: {student?.dob}
                     </Grid>
                     <Grid item>
-                        EMAIL: {student.email}
+                        EMAIL: {student?.email}
                     </Grid>
                 </Grid>
             </Paper>
@@ -72,21 +77,23 @@ export default function ViewStudentPage(props) {
                     marginTop: '3%',
                     padding: '3%',
                     background: '#ffda8a',
-                    width: '70%',
+                    width: '50%',
                 }}
                 elevation={8}
             >
-                <Grid container direction="row" align="center" spacing={2} style={{marginLeft: '7%',}}>
+                <Grid container direction="row" align="center" spacing={2} style={{marginLeft: '11%',}}>
                     <Grid item xs={3}>Class Code</Grid>
-                    <Divider orientation="vertical" flexItem />
                     <Grid item xs={3}>Course</Grid>
-                    <Divider orientation="vertical" flexItem />
                     <Grid item xs={3}>Grade</Grid>
                 </Grid>
                 <Divider orientation="horizontal" flexItem />
-                under
                 <Grid container direction="column" spacing={2}>
-                    
+                    {grades?.map((r, index) => 
+                        <Grid container item direction="column" xs={12} alignItems="center" spacing={1} key={index}>
+                            <GradeCard g={r} />
+                        </Grid>
+                        )
+                    }
                 </Grid>
             </Paper>
         </Box>

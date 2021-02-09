@@ -50,7 +50,6 @@ export default function ViewStudentModal(props) {
                 console.log("There is no student with this ID.");
             }
             else {
-                console.log("Here is the student with ID " + id);
                 console.log(result.data.result);
                 history.push({
                     pathname: `/viewstudent/${id}`,

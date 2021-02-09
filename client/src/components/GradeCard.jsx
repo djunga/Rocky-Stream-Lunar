@@ -1,21 +1,15 @@
-import React from 'react';
-import { useHistory } from 'react-router-dom';
-import { Box, Button, Grid, Paper } from '@material-ui/core';
+import React, { useEffect, useState } from 'react';
+import { Box, Divider, Grid, Paper } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
-import { LocalDining as LocalDiningIcon, AccessAlarm as AccessAlarmIcon } from '@material-ui/icons';
-import { Text } from 'react-font'
 
 const useStyles = makeStyles((theme) => ({
     paper: {
-        backgroundColor: 'white',
-        color: 'black',
+        marginTop: '3%',
+        backgroundColor: '#ffda8a',
         padding: '3%',
-        minWidth: '70%',
-        border: '4px solid orange',
-        '&:hover': {
-            border: '4px solid red',
-            cursor: 'pointer'
-        }
+        width: '70%',
+        //border: '4px solid '#ffda8a,
+
     },
     box: {
         border: '4px dashed black',
@@ -26,39 +20,27 @@ const useStyles = makeStyles((theme) => ({
 
 export default function GradeCard(props) {
     const classes = useStyles();
-    const { grade } = props;
+    const { g } = props;
+
+    const [grade, setGrade] = useState(null);
+
+    useEffect(() => {
+        setGrade(g);
+      }, []);
+
+    useEffect(() => { 
+        console.log("grade: ", grade); 
+    }, [grade]);
 
     return(
         <Paper
-            elevation={8}
+            elevation={2}
             className={classes.paper}
         >
             <Grid container direction="row" spacing={1}>
-                <Grid container item direction="column" xs={6}>
-                    <Grid item xs={6}>
-                        <Text family="Yusei Magic" style={{ fontSize: 24 }} >
-                            {recipe?.title}
-                        </Text>
-                    </Grid>
-                </Grid>
-                <Grid item xs={6}>
-                    <Box alignItems="center" className={classes.box}>
-                        <Grid container direction="column" spacing={2}>
-                            <Grid container item direction="row" spacing={1} xs={12} style={{ display: 'inline'}}>
-                                <Grid item xs={12}>
-                                    <AccessAlarmIcon style={{marginRight: '10%'}} />
-                                    Prep Time: {recipe?.prepTime}
-                                </Grid>
-                            </Grid>    
-                            <Grid container item direction="row" spacing={1} xs={12}>
-                                <Grid item xs={12}>
-                                    <LocalDiningIcon style={{marginRight: '10%'}}  />
-                                    Number of Servings: {recipe?.servings}
-                                </Grid>
-                            </Grid>                  
-                        </Grid>
-                    </Box>
-                </Grid>
+                <Grid item xs={4}>{grade?.class_code}</Grid>
+                <Grid item xs={4}>{grade?.category +" "+ grade?.code}</Grid>                    
+                <Grid item xs={4}>{grade?.letter}</Grid>
             </Grid>
         </Paper>
     );

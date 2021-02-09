@@ -107,6 +107,30 @@ app.post("/verifyLogin", (req, res) => {
     );
   });
 
+  app.post("/viewstudent/:id", (req, res) => {
+    console.log(req.body);
+    const student_id = req.body.student_id;
+  
+    db.query(
+      "SELECT * FROM grades WHERE student_id = ?",
+      [student_id],
+      (err, result) => {
+        if(err && err.errno == 1062) {  // A student with this id or email already exists in the db.
+          console.log("Error1062: ?um?");
+          res.send("DNE");
+        }
+        else if (err) {
+          console.log(err);
+        } else {
+          console.log("Grade query: ", result);
+          res.send({
+            result: result,
+          });
+        }
+      }
+    );
+  });
+
 app.listen(3001, ()=> {
     console.log("The LUNAR server is running...");
 });
