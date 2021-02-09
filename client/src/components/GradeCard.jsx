@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Box, Divider, Grid, Paper } from '@material-ui/core';
+import { Grid, Paper } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({
@@ -8,8 +8,6 @@ const useStyles = makeStyles((theme) => ({
         backgroundColor: '#ffda8a',
         padding: '3%',
         width: '70%',
-        //border: '4px solid '#ffda8a,
-
     },
     box: {
         border: '4px dashed black',
@@ -28,9 +26,9 @@ export default function GradeCard(props) {
         setGrade(g);
       }, []);
 
-    useEffect(() => { 
-        console.log("grade: ", grade); 
-    }, [grade]);
+    // useEffect(() => { 
+    //     console.log("grade: ", grade); 
+    // }, [grade]);
 
     return(
         <Paper

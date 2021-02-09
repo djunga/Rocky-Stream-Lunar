@@ -1,15 +1,18 @@
 import React, { useEffect, useState } from 'react';
-import { makeStyles } from '@material-ui/core/styles';
+import { useHistory } from 'react-router-dom';
 import { Box, Divider, Grid, Paper } from '@material-ui/core';
+import { ArrowBack as ArrowBackIcon, } from '@material-ui/icons';
+
 import GradeCard from '../GradeCard';
 import Axios from 'axios';
 
 export default function ViewStudentPage(props) {
+    const history = useHistory();
+
     const [student, setStudent] = useState(null);
     const [grades, setGrades] = useState(null);
 
     useEffect(() => {
-        //console.log(props);
         if(props.location.state) {
             setStudent(props.location.state[0]);
         }
@@ -28,8 +31,6 @@ export default function ViewStudentPage(props) {
                 console.log("There is no student with this ID.");
             }
             else {
-                console.log(result);
-                console.log(result.data.result);
                 setGrades(result.data.result);
             }
         });
@@ -41,12 +42,24 @@ export default function ViewStudentPage(props) {
                 padding: '1%'
             }}
         >
+            <ArrowBackIcon 
+                onClick={() => history.goBack()}
+                fontSize="large"
+                style={{
+                    color: 'red',
+                    float: 'left',
+                    // marginLeft: '5%',
+                    // marginTop: '3%',
+                    cursor: 'pointer'
+                }}
+            />
             <h1>View Student</h1>
             <Paper
                 style={{
                     background: '#ffda8a',
-                    width: '30%',
-                    height: '40%'
+                    height: '40%',
+                    display: 'inline-block',
+                    marginLeft: '1%',
                 }}
                 elevation={8}
             >
@@ -64,17 +77,20 @@ export default function ViewStudentPage(props) {
                         GPA: {student?.gpa}
                     </Grid>
                     <Grid item>
-                        DOB: {student?.dob}
+                        DOB: {student?.dob.substring(0,student?.dob.length-14)}
                     </Grid>
                     <Grid item>
                         EMAIL: {student?.email}
                     </Grid>
                 </Grid>
             </Paper>
+            <br/>
+            <br/>
+            <br/>
             <h2>Grades</h2>
             <Paper
                 style={{
-                    marginTop: '3%',
+                    marginLeft: '20%',
                     padding: '3%',
                     background: '#ffda8a',
                     width: '50%',

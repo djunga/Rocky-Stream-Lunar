@@ -97,7 +97,7 @@ app.post("/verifyLogin", (req, res) => {
         else if (err) {
           console.log(err);
         } else {
-          console.log("view student query: ", result);
+          console.log("Success fetching student");
           res.send({
             id: id,
             result: result,
@@ -108,7 +108,6 @@ app.post("/verifyLogin", (req, res) => {
   });
 
   app.post("/viewstudent/:id", (req, res) => {
-    console.log(req.body);
     const student_id = req.body.student_id;
   
     db.query(
@@ -116,13 +115,13 @@ app.post("/verifyLogin", (req, res) => {
       [student_id],
       (err, result) => {
         if(err && err.errno == 1062) {  // A student with this id or email already exists in the db.
-          console.log("Error1062: ?um?");
+          console.log("Error1062: Getting grades");
           res.send("DNE");
         }
         else if (err) {
           console.log(err);
         } else {
-          console.log("Grade query: ", result);
+          //console.log("Grade query: ", result);
           res.send({
             result: result,
           });
