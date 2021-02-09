@@ -1,4 +1,4 @@
-# Rocky-Stream-Lunar
+# Rocky Stream LUNAR
 
 ## A mini-clone of Stony Brook University's student record management system, SOLAR.
 ## Log in as an Admin or enrolled student.
