@@ -4,6 +4,7 @@ import { useHistory } from 'react-router-dom';
 import { Box, Button, Grid } from '@material-ui/core';
 import NewStudentModal from '../modals/NewStudentModal';
 import ViewStudentModal from '../modals/ViewStudentModal';
+import UpdateStudentModal from '../modals/UpdateStudentModal';
 
 const useStyles = makeStyles((theme) => ({
     button: {
@@ -25,10 +26,12 @@ export default function DashboardPage(props) {
     const [user, setUser] = useState(null);
     const [openNewStudent, setOpenNewStudent] = useState(false);
     const [openViewStudent, setOpenViewStudent] = useState(false);
-
+    const [openUpdateStudent, setOpenUpdateStudent] = useState(false);
 
     useEffect(() => {
-        setUser(props.location.state.user);
+        if(props.location.state) {
+            setUser(props.location.state.user);
+        }
       }, []);
 
     useEffect(() => { 
@@ -45,7 +48,7 @@ export default function DashboardPage(props) {
                 <Button className={classes.button} onClick={() => setOpenNewStudent(true)}>
                     New Student
                 </Button>
-                <Button className={classes.button}>
+                <Button className={classes.button} onClick={() => setOpenUpdateStudent(true)}>
                     Update Student
                 </Button>
                 <Button className={classes.button}>
@@ -60,6 +63,8 @@ export default function DashboardPage(props) {
             </Grid>
             <NewStudentModal open={openNewStudent} setOpen={setOpenNewStudent} />
             <ViewStudentModal open={openViewStudent} setOpen={setOpenViewStudent} />
+            <UpdateStudentModal open={openUpdateStudent} setOpen={setOpenUpdateStudent} />
+
         </Box>
     );
 }

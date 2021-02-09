@@ -48,8 +48,6 @@ export default function ViewStudentPage(props) {
                 style={{
                     color: 'red',
                     float: 'left',
-                    // marginLeft: '5%',
-                    // marginTop: '3%',
                     cursor: 'pointer'
                 }}
             />
