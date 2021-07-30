@@ -1,11 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import { useHistory } from 'react-router-dom';
 import { Box, Button, Grid } from '@material-ui/core';
-import NewStudentModal from '../modals/NewStudentModal';
-import ViewStudentModal from '../modals/ViewStudentModal';
-import UpdateStudentModal from '../modals/UpdateStudentModal';
-import DeleteStudentModal from '../modals/DeleteStudentModal';
+import TextField from '@material-ui/core/TextField';
 
 const useStyles = makeStyles((theme) => ({
     button: {
@@ -21,24 +17,11 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function DashboardPage(props) {
-    const history = useHistory();
-    const classes = useStyles();
-
-    const [user, setUser] = useState(null);
-    const [openNewStudent, setOpenNewStudent] = useState(false);
-    const [openViewStudent, setOpenViewStudent] = useState(false);
-    const [openUpdateStudent, setOpenUpdateStudent] = useState(false);
-    const [openDeleteStudent, setOpenDeleteStudent] = useState(false);
-
+    const [courses, setCourses] = useState([])
+        
     useEffect(() => {
-        if(props.location.state) {
-            setUser(props.location.state.user);
-        }
-      }, []);
 
-    useEffect(() => { 
-        console.log("user: ", user); 
-    }, [user]);
+    }, []) 
 
     return(
         <Box
@@ -47,24 +30,10 @@ export default function DashboardPage(props) {
             }}
         >
             <Grid container direction="column" spacing={3}>
-                <Button className={classes.button} onClick={() => setOpenNewStudent(true)}>
-                    New Student
-                </Button>
-                <Button className={classes.button} onClick={() => setOpenUpdateStudent(true)}>
-                    Update Student
-                </Button>
-                <Button className={classes.button} onClick={() => setOpenDeleteStudent(true)}>
-                    Delete Student
-                </Button>
-                <Button className={classes.button} onClick={() => setOpenViewStudent(true)}>
-                    View Student
-                </Button>
+                <Box>
+                    <TextField label="Search" variant="outlined" />
+                </Box>
             </Grid>
-            <NewStudentModal open={openNewStudent} setOpen={setOpenNewStudent} />
-            <ViewStudentModal open={openViewStudent} setOpen={setOpenViewStudent} />
-            <UpdateStudentModal open={openUpdateStudent} setOpen={setOpenUpdateStudent} />
-            <DeleteStudentModal open={openDeleteStudent} setOpen={setOpenDeleteStudent} />
         </Box>
     );
 }
-
